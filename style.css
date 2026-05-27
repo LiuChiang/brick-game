@@ -1,0 +1,649 @@
+/* ==========================================
+   CSS RESET & CORE VARIABLES
+   ========================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+:root {
+    /* 預設值（賽博霓虹） */
+    --font-game: 'Orbitron', sans-serif;
+    --bg-gradient: linear-gradient(135deg, #0b001a 0%, #020005 100%);
+    --hud-bg: rgba(15, 2, 28, 0.7);
+    --border-color: rgba(255, 0, 127, 0.4);
+    --border-glow: 0 0 10px rgba(255, 0, 127, 0.3), inset 0 0 5px rgba(0, 243, 255, 0.2);
+    --accent-primary: #ff007f;
+    --accent-secondary: #00f3ff;
+    --accent-tertiary: #ffe600;
+    --text-color: #ffffff;
+    --text-glow: 0 0 8px rgba(255, 0, 127, 0.8), 0 0 15px rgba(0, 243, 255, 0.5);
+    --btn-bg: rgba(255, 0, 127, 0.15);
+    --btn-hover-bg: rgba(0, 243, 255, 0.25);
+    --shadow-card: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+    --border-radius: 12px;
+}
+
+/* ==========================================
+   THEME STYLES (動態切換)
+   ========================================== */
+
+/* 1. 賽博龐克霓虹 (theme-cyber) - 預設 */
+body.theme-cyber {
+    --font-game: 'Orbitron', sans-serif;
+    --bg-gradient: linear-gradient(135deg, #0e0120 0%, #030008 100%);
+    --hud-bg: rgba(18, 4, 36, 0.75);
+    --border-color: rgba(255, 0, 127, 0.4);
+    --border-glow: 0 0 12px rgba(255, 0, 127, 0.3), inset 0 0 6px rgba(0, 243, 255, 0.25);
+    --accent-primary: #ff007f;
+    --accent-secondary: #00f3ff;
+    --accent-tertiary: #ffe600;
+    --text-color: #ffffff;
+    --text-glow: 0 0 8px rgba(255, 0, 127, 0.8);
+    --btn-bg: rgba(255, 0, 127, 0.2);
+    --btn-hover-bg: rgba(0, 243, 255, 0.3);
+    --shadow-card: 0 10px 40px rgba(0, 0, 0, 0.6);
+    --border-radius: 12px;
+}
+
+/* 2. 極簡極光毛玻璃 (theme-aurora) */
+body.theme-aurora {
+    --font-game: 'Outfit', sans-serif;
+    --bg-gradient: linear-gradient(135deg, #0b1528 0%, #090e18 100%);
+    --hud-bg: rgba(255, 255, 255, 0.05);
+    --border-color: rgba(255, 255, 255, 0.08);
+    --border-glow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    --accent-primary: #a18cd1;
+    --accent-secondary: #fbc2eb;
+    --accent-tertiary: #84fab0;
+    --text-color: #e2e8f0;
+    --text-glow: none;
+    --btn-bg: rgba(255, 255, 255, 0.08);
+    --btn-hover-bg: rgba(255, 255, 255, 0.15);
+    --shadow-card: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    --border-radius: 20px;
+    backdrop-filter: blur(10px);
+}
+
+/* 3. 復古 8-Bit 像素街機 (theme-retro) */
+body.theme-retro {
+    --font-game: 'Press Start 2P', monospace;
+    --bg-gradient: #000000;
+    --hud-bg: #000000;
+    --border-color: #ffffff;
+    --border-glow: none;
+    --accent-primary: #00ff00;
+    --accent-secondary: #ffff00;
+    --accent-tertiary: #ff00ff;
+    --text-color: #ffffff;
+    --text-glow: none;
+    --btn-bg: #000000;
+    --btn-hover-bg: #00ff00;
+    --shadow-card: none;
+    --border-radius: 0px;
+}
+
+/* 4. 宇宙星河科幻 (theme-cosmic) */
+body.theme-cosmic {
+    --font-game: 'Share Tech Mono', sans-serif;
+    --bg-gradient: radial-gradient(circle at center, #0e0b24 0%, #020108 100%);
+    --hud-bg: rgba(10, 10, 20, 0.8);
+    --border-color: rgba(127, 0, 255, 0.5);
+    --border-glow: 0 0 15px rgba(127, 0, 255, 0.4);
+    --accent-primary: #7f00ff;
+    --accent-secondary: #ff00ff;
+    --accent-tertiary: #00e5ff;
+    --text-color: #d1f4ff;
+    --text-glow: 0 0 6px rgba(127, 0, 255, 0.6);
+    --btn-bg: rgba(127, 0, 255, 0.15);
+    --btn-hover-bg: rgba(255, 0, 255, 0.25);
+    --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.7);
+    --border-radius: 8px;
+}
+
+/* ==========================================
+   LAYOUT STRUCTURE
+   ========================================== */
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: var(--bg-gradient);
+    font-family: var(--font-game);
+    color: var(--text-color);
+    overflow: hidden;
+    transition: background 0.8s ease;
+}
+
+#game-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 800px;
+    margin: 20px auto;
+}
+
+/* ==========================================
+   HUD HEADER
+   ========================================== */
+
+#game-hud {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 25px;
+    background: var(--hud-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--border-glow);
+    border-radius: var(--border-radius);
+    margin-bottom: 15px;
+    backdrop-filter: blur(10px);
+    transition: all 0.5s ease;
+}
+
+/* Retro theme hard borders override */
+body.theme-retro #game-hud, 
+body.theme-retro #canvas-container,
+body.theme-retro .overlay-content,
+body.theme-retro .theme-btn,
+body.theme-retro .action-btn {
+    border: 4px double #ffffff;
+    box-shadow: none !important;
+}
+
+.hud-left, .hud-center, .hud-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.hud-left {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+}
+
+#game-title {
+    font-size: 1.2rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-shadow: var(--text-glow);
+    transition: text-shadow 0.5s ease;
+}
+
+body.theme-retro #game-title {
+    font-size: 0.8rem;
+}
+
+.hud-item-group {
+    display: flex;
+    gap: 15px;
+}
+
+.hud-item {
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+}
+
+body.theme-retro .hud-item {
+    font-size: 0.65rem;
+}
+
+.hud-item .value {
+    font-weight: bold;
+    color: var(--accent-secondary);
+}
+
+.value-lives {
+    letter-spacing: 3px;
+    display: inline-block;
+}
+
+/* Theme Switcher in HUD */
+.theme-selector-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.theme-label {
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+body.theme-retro .theme-label {
+    font-size: 0.55rem;
+}
+
+.theme-options {
+    display: flex;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 30px;
+    padding: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+body.theme-retro .theme-options {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+}
+
+.theme-btn {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-color);
+    font-family: var(--font-game);
+    font-size: 0.75rem;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+body.theme-retro .theme-btn {
+    border-radius: 0;
+    font-size: 0.5rem;
+    border: 1px solid #fff;
+    margin-right: 2px;
+}
+
+.theme-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.theme-btn.active {
+    background: var(--accent-primary);
+    color: #ffffff;
+    box-shadow: 0 0 10px rgba(255, 0, 127, 0.4);
+}
+
+body.theme-retro .theme-btn.active {
+    background: #ffffff;
+    color: #000000;
+    box-shadow: none !important;
+}
+
+.audio-controls {
+    display: flex;
+    gap: 5px;
+}
+
+.audio-btn {
+    background: var(--btn-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    font-family: var(--font-game);
+    font-size: 0.75rem;
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+body.theme-retro .audio-btn {
+    font-size: 0.5rem;
+    border-radius: 0;
+    border: 2px solid #fff;
+}
+
+.audio-btn:hover {
+    background: var(--btn-hover-bg);
+    transform: translateY(-1px);
+}
+
+.audio-btn.muted {
+    opacity: 0.5;
+    text-decoration: line-through;
+}
+
+/* ==========================================
+   GAME CANVAS CONTAINER & CANVAS
+   ========================================== */
+
+#canvas-container {
+    position: relative;
+    width: 800px;
+    height: 600px;
+    background: #000000;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--border-glow);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    transition: all 0.5s ease;
+}
+
+#gameCanvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* ==========================================
+   OVERLAY SCREENS (選單、結算、死亡)
+   ========================================== */
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+    z-index: 10;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+body.theme-aurora .overlay {
+    background: rgba(10, 15, 30, 0.6);
+    backdrop-filter: blur(8px);
+}
+
+.overlay-content {
+    background: var(--hud-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--border-glow);
+    border-radius: var(--border-radius);
+    padding: 40px 50px;
+    width: 550px;
+    text-align: center;
+    max-width: 90%;
+    backdrop-filter: blur(15px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: scale(0.9);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.overlay.active .overlay-content {
+    transform: scale(1);
+}
+
+/* Logo and Titles */
+.game-logo {
+    font-size: 2.5rem;
+    font-weight: 900;
+    letter-spacing: 5px;
+    margin-bottom: 5px;
+    color: #ffffff;
+    text-shadow: var(--text-glow);
+    animation: logoPulse 2s infinite ease-in-out;
+}
+
+body.theme-retro .game-logo {
+    font-size: 1.4rem;
+    animation: none;
+}
+
+.game-subtitle {
+    font-size: 1rem;
+    color: var(--accent-secondary);
+    letter-spacing: 3px;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+}
+
+body.theme-retro .game-subtitle {
+    font-size: 0.6rem;
+}
+
+/* Instructions */
+.instructions-panel {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+body.theme-retro .instructions-panel {
+    background: transparent;
+    border: 2px solid #fff;
+    border-radius: 0;
+}
+
+.instructions-panel h3 {
+    font-size: 1rem;
+    color: var(--accent-tertiary);
+    margin-bottom: 12px;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+body.theme-retro .instructions-panel h3 {
+    font-size: 0.6rem;
+}
+
+.instructions-panel ul {
+    list-style-type: none;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+body.theme-retro .instructions-panel ul {
+    font-size: 0.5rem;
+    line-height: 1.8;
+}
+
+.instructions-panel li {
+    margin-bottom: 8px;
+    position: relative;
+    padding-left: 15px;
+}
+
+.instructions-panel li::before {
+    content: "■";
+    position: absolute;
+    left: 0;
+    color: var(--accent-primary);
+    font-size: 0.7rem;
+}
+
+/* Action Buttons */
+.action-btn {
+    background: var(--btn-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    font-family: var(--font-game);
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 15px 40px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    letter-spacing: 2px;
+}
+
+body.theme-retro .action-btn {
+    font-size: 0.7rem;
+    border-radius: 0;
+    border: 4px solid #fff;
+    background: #000;
+}
+
+.action-btn:hover {
+    background: var(--btn-hover-bg);
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
+}
+
+body.theme-retro .action-btn:hover {
+    box-shadow: none !important;
+    background: #fff;
+    color: #000;
+}
+
+.action-btn:active {
+    transform: scale(0.98) translateY(0);
+}
+
+/* Stats Styles */
+.level-stats, .final-stats {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+body.theme-retro .level-stats,
+body.theme-retro .final-stats {
+    font-size: 0.8rem;
+}
+
+.stats-bonus {
+    margin-bottom: 30px;
+    font-size: 1rem;
+    line-height: 1.8;
+    opacity: 0.9;
+}
+
+body.theme-retro .stats-bonus {
+    font-size: 0.6rem;
+}
+
+.stats-bonus span, .final-stats span {
+    color: var(--accent-tertiary);
+    font-weight: bold;
+}
+
+.badge {
+    background: var(--accent-tertiary);
+    color: #000000;
+    padding: 6px 15px;
+    font-size: 0.85rem;
+    border-radius: 30px;
+    display: inline-block;
+    margin-top: 15px;
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(255, 230, 0, 0.5);
+}
+
+body.theme-retro .badge {
+    border-radius: 0;
+    box-shadow: none;
+    font-size: 0.55rem;
+    border: 2px solid #fff;
+    background: #000;
+    color: #fff;
+}
+
+.alert-text {
+    color: var(--accent-primary) !important;
+}
+
+/* ==========================================
+   POWER-UPS FLOATING BAR
+   ========================================== */
+
+#powerups-active {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.powerup-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    animation: slideIn 0.3s ease-out;
+}
+
+body.theme-retro .powerup-pill {
+    border-radius: 0;
+    border: 1px solid #fff;
+    font-size: 0.5rem;
+}
+
+.powerup-pill .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+body.theme-retro .powerup-pill .dot {
+    border-radius: 0;
+}
+
+.powerup-pill .name {
+    font-weight: bold;
+}
+
+.powerup-pill .time {
+    opacity: 0.7;
+}
+
+/* ==========================================
+   FOOTER
+   ========================================== */
+
+#game-footer {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    font-size: 0.75rem;
+    opacity: 0.5;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+body.theme-retro #game-footer {
+    font-size: 0.45rem;
+}
+
+/* ==========================================
+   KEYFRAME ANIMATIONS
+   ========================================== */
+
+@keyframes logoPulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}

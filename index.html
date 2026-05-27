@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brick Quantum - 多維度打磚塊遊戲</title>
+    <!-- 引入四種風格所需的 Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Outfit:wght@300;400;600&family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-cyber">
+    <div id="game-wrapper">
+        <!-- 玻璃擬態 HUD 頂部狀態欄 -->
+        <header id="game-hud">
+            <div class="hud-left">
+                <h1 id="game-title">BRICK QUANTUM</h1>
+                <div class="hud-item-group">
+                    <div class="hud-item" id="hud-score">得分: <span class="value">000000</span></div>
+                    <div class="hud-item" id="hud-highscore">最高: <span class="value">000000</span></div>
+                </div>
+            </div>
+
+            <div class="hud-center">
+                <div class="hud-item" id="hud-level">關卡: <span class="value">1</span></div>
+                <div class="hud-item" id="hud-lives">生命: <span class="value-lives">❤️❤️❤️</span></div>
+            </div>
+
+            <div class="hud-right">
+                <!-- 風格切換器 -->
+                <div class="theme-selector-container">
+                    <span class="theme-label">風格:</span>
+                    <div class="theme-options">
+                        <button class="theme-btn active" data-theme="cyber" title="賽博霓虹">霓虹</button>
+                        <button class="theme-btn" data-theme="aurora" title="極簡極光">極光</button>
+                        <button class="theme-btn" data-theme="retro" title="復古像素">像素</button>
+                        <button class="theme-btn" data-theme="cosmic" title="宇宙星河">星雲</button>
+                    </div>
+                </div>
+
+                <!-- 聲音切換 -->
+                <div class="audio-controls">
+                    <button id="btn-sound" class="audio-btn" title="音效">🔊 音效</button>
+                    <button id="btn-music" class="audio-btn" title="音樂">🎵 音樂</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- 遊戲主畫面容器 -->
+        <div id="canvas-container">
+            <canvas id="gameCanvas" width="800" height="600"></canvas>
+
+            <!-- 主選單 Overlay -->
+            <div id="screen-start" class="overlay active">
+                <div class="overlay-content">
+                    <h2 class="game-logo">BRICK QUANTUM</h2>
+                    <p class="game-subtitle">多維度打磚塊體驗</p>
+                    
+                    <div class="instructions-panel">
+                        <h3>遊戲玩法</h3>
+                        <ul>
+                            <li>控制：使用<strong>滑鼠左右移動</strong>控制擋板</li>
+                            <li>發射/雷射：在球被黏住或獲得雷射道具時，按<strong>滑鼠左鍵</strong>發射</li>
+                            <li>道具：吃掉掉落的發光晶片來解鎖特殊能力</li>
+                            <li>目標：擊碎畫面上所有的磚塊，逐步挑戰更高難度的關卡</li>
+                        </ul>
+                    </div>
+
+                    <button id="btn-start" class="action-btn glow-btn">開始遊戲</button>
+                </div>
+            </div>
+
+            <!-- 關卡清除 Overlay -->
+            <div id="screen-level-clear" class="overlay">
+                <div class="overlay-content">
+                    <h2 class="glitch-text">關卡清除！</h2>
+                    <p class="level-stats">關卡 <span id="stat-completed-level">1</span> 完成</p>
+                    <div class="stats-bonus">
+                        <p>關卡獎勵：<span id="stat-level-bonus">+1000</span></p>
+                        <p>目前得分：<span id="stat-current-score">0</span></p>
+                    </div>
+                    <button id="btn-next-level" class="action-btn glow-btn">進入下一關</button>
+                </div>
+            </div>
+
+            <!-- 遊戲結束 Overlay -->
+            <div id="screen-game-over" class="overlay">
+                <div class="overlay-content">
+                    <h2 class="glitch-text alert-text">系統終止</h2>
+                    <p class="game-subtitle">GAME OVER</p>
+                    
+                    <div class="final-stats">
+                        <p>最終得分: <span id="stat-final-score">0</span></p>
+                        <p>達成功關卡: <span id="stat-final-level">1</span></p>
+                        <div id="highscore-badge" class="badge">🏆 新紀錄！</div>
+                    </div>
+
+                    <button id="btn-restart" class="action-btn glow-btn">重新啟動</button>
+                </div>
+            </div>
+
+            <!-- 暫停選單 Overlay -->
+            <div id="screen-pause" class="overlay">
+                <div class="overlay-content">
+                    <h2>系統暫停</h2>
+                    <p class="game-subtitle">PAUSED</p>
+                    <button id="btn-resume" class="action-btn glow-btn">繼續遊戲</button>
+                </div>
+            </div>
+
+            <!-- 道具顯示浮動視窗 -->
+            <div id="powerups-active">
+                <!-- 動態注入啟動中的道具與剩餘時間 -->
+            </div>
+        </div>
+
+        <footer id="game-footer">
+            <p>Brick Quantum &copy; 2026. 用滑鼠掌控維度。按 <strong>ESC</strong> 鍵暫停。</p>
+        </footer>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
